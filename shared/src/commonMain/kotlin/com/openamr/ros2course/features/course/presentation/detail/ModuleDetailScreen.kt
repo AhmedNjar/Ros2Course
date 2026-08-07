@@ -221,7 +221,8 @@ private fun StructuredContent(content: ModuleContent.Structured) {
 @Composable
 private fun ThemedMarkdown(content: String, modifier: Modifier = Modifier) {
     Markdown(
-        content = content,
+        // Prepend newline to ensure headers at the start of sections are recognized
+        content = "\n" + content,
         modifier = modifier,
         colors = markdownColor(
             text = Color.White,
@@ -240,12 +241,25 @@ private fun ThemedMarkdown(content: String, modifier: Modifier = Modifier) {
             quote = MaterialTheme.typography.bodyMedium.copy(color = TextGrey, fontStyle = FontStyle.Italic),
             text = TextStyle(color = Color.White, fontSize = 15.sp, lineHeight = 21.sp)
         ),
+        /*
         components = markdownComponents(
+            // Explicitly render indented code blocks as plain text to avoid boxing everything
+            codeBlock = { model ->
+                Text(
+                    text = model.content,
+                    color = Color.White,
+                    fontFamily = FontFamily.Monospace,
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(vertical = 4.dp)
+                )
+            },
             codeFence = { model -> CopyableCodeBlock(model.content) }
         )
+        */
     )
 }
 
+/*
 @Composable
 private fun CopyableCodeBlock(content: String) {
     val clipboardManager = LocalClipboardManager.current
@@ -290,3 +304,4 @@ private fun CopyableCodeBlock(content: String) {
         }
     }
 }
+*/
